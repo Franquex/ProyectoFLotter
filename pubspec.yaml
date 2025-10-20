@@ -17,3 +17,15 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato.tttf/Lato-Regular.ttf
+
+  assets:
+    - assets/images/persona1.jpg
+    - assets/images/persona2.jpg
+    - assets/images/persona3.jpg
+    - assets/images/persona4.jpg
+    - assets/images/persona5.jpg
