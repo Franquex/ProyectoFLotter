@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:widget_stack/card_image.dart';
 import 'package:widget_stack/gradient_back.dart';
+import 'package:widget_stack/home_app_bar.dart';
 import 'package:widget_stack/review.dart';
 import 'package:widget_stack/review_list.dart';
 
@@ -35,16 +37,12 @@ class MyHome extends StatelessWidget{
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            "My Places"
-        ),
-      ),
       body: Stack(
         children: <Widget>[
-          GradientBack()
+          listView,
+          HomeAppBar("Popular")
         ],
-      ),
+      )
     );
   }
 }
