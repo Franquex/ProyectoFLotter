@@ -21,7 +21,7 @@ flutter:
   fonts:
     - family: Lato
       fonts:
-        - asset: assets/fonts/Lato.tttf/Lato-Regular.ttf
+        - asset: assets/fonts/Lato-Regular.ttf
 
   assets:
     - assets/images/persona1.jpg
