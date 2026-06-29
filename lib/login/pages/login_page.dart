@@ -15,9 +15,9 @@ class _LoginPageState extends State<LoginPage>
     with SingleTickerProviderStateMixin {
   late PageController _pageController;
 
-
-  Color left = const Color(0xFF000000);   // Esto es Negro puro
-  Color right = const Color(0xFFFFFFFF);  // Esto es Blanco puro
+  // Colores formales para el selector
+  Color left = Colors.white;
+  Color right = Colors.grey.shade500;
 
   @override
   void dispose() {
@@ -34,6 +34,8 @@ class _LoginPageState extends State<LoginPage>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // Fondo sobrio y corporativo
+        backgroundColor: Colors.grey.shade100,
         body: SingleChildScrollView(
           physics: const ClampingScrollPhysics(),
           child: GestureDetector(
@@ -43,22 +45,11 @@ class _LoginPageState extends State<LoginPage>
             child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                    colors: <Color>[
-                      CustomTheme.loginGradientStart,
-                      CustomTheme.loginGradientEnd
-                    ],
-                    begin: FractionalOffset(0.0, 0.0),
-                    end: FractionalOffset(1.0, 1.0),
-                    stops: <double>[0.0, 1.0],
-                    tileMode: TileMode.clamp),
-              ),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
+                    padding: const EdgeInsets.only(top: 60.0, bottom: 20.0),
                     child: _buildMenuBar(context),
                   ),
                   Expanded(
@@ -70,13 +61,13 @@ class _LoginPageState extends State<LoginPage>
                         FocusScope.of(context).requestFocus(FocusNode());
                         if (i == 0) {
                           setState(() {
-                            right = const Color(0xFFFFFFFF);
-                            left = const Color(0xFF000000);
+                            right = Colors.grey.shade500;
+                            left = Colors.white;
                           });
                         } else if (i == 1) {
                           setState(() {
-                            right = const Color(0xFF000000);
-                            left = const Color(0xFFFFFFFF);
+                            right = Colors.white;
+                            left = Colors.grey.shade500;
                           });
                         }
                       },
@@ -103,12 +94,18 @@ class _LoginPageState extends State<LoginPage>
     return Container(
       width: 300.0,
       height: 50.0,
-      decoration: const BoxDecoration(
-        color: Color(0x552B2B2B),
-        borderRadius: BorderRadius.all(Radius.circular(25.0)),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        border: Border.all(color: Colors.grey.shade300),
+        borderRadius: const BorderRadius.all(Radius.circular(25.0)),
       ),
       child: CustomPaint(
-        painter: BubbleIndicatorPainter(pageController: _pageController),
+        painter: BubbleIndicatorPainter(
+            pageController: _pageController,
+            dxTarget: 125.0,
+            dxEntry: 25.0,
+            radius: 21.0,
+            dy: 25.0), // Mantenemos tu painter, asumiendo que funciona con el tema formal
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
@@ -121,13 +118,13 @@ class _LoginPageState extends State<LoginPage>
                 child: Text(
                   'EXISTE',
                   style: TextStyle(
-                      color: left,
+                      color: left == Colors.white ? Colors.black : left,
                       fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
                       fontFamily: 'WorkSansSemiBold'),
                 ),
               ),
             ),
-            //Container(height: 33.0, width: 1.0, color: Colors.white),
             Expanded(
               child: TextButton(
                 style: ButtonStyle(
@@ -137,8 +134,9 @@ class _LoginPageState extends State<LoginPage>
                 child: Text(
                   'NUEVO',
                   style: TextStyle(
-                      color: right,
+                      color: right == Colors.white ? Colors.black : right,
                       fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
                       fontFamily: 'WorkSansSemiBold'),
                 ),
               ),

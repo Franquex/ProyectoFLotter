@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:widget_stack/search_places.dart';
-import 'package:widget_stack/profile_places.dart';
+import 'package:places/profile_places.dart';
+import 'package:places/search_places.dart';
+
 import 'home.dart';
 
 class Places extends StatefulWidget{
@@ -30,8 +31,8 @@ class _Places extends State<Places>{
     final scaffold = Scaffold(
       bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
-            canvasColor: Colors.white,
-            primaryColor: Color(0xFF574ACF)
+          canvasColor: const Color(0xFFFFFFFF),
+          primaryColor: Color(0xFF574ACF)
         ),
         child: BottomNavigationBar(
           items: [

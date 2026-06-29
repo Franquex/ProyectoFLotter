@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:widget_stack/review.dart';
+import 'package:places/review.dart';
 
 class ReviewList extends StatelessWidget {
   @override

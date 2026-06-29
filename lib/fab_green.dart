@@ -29,7 +29,7 @@ class _FabGreen extends State<FabGreen>{
       shape: CircleBorder(),
       child: Icon(
         _fabIcon,
-        color: Colors.white,
+        color: const Color(0xFFFFFFFF),
       ),
       onPressed: onPressedFav,
     );

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:widget_stack/rounded_button.dart';
+import 'package:places/rounded_button.dart';
 
 class DescriptionPlace extends StatelessWidget{
   // variables
@@ -14,21 +14,21 @@ class DescriptionPlace extends StatelessWidget{
 
     final titulo = Container(
       margin: EdgeInsets.only(
-          right: 20
+        right: 20
       ),
       child: Text(
         textTitulo,
         style: TextStyle(
-            fontFamily: "Lato",
-            fontSize: 38,
-            fontWeight: FontWeight.bold
+          fontFamily: "Lato",
+          fontSize: 38,
+          fontWeight: FontWeight.bold
         ),
       ),
     );
 
     final estrella = Container(
       margin: EdgeInsets.only(
-          right: 5
+        right: 5
       ),
       child: Icon(
         Icons.star,
@@ -38,7 +38,7 @@ class DescriptionPlace extends StatelessWidget{
 
     final estrellaBorde = Container(
       margin: EdgeInsets.only(
-          right: 5
+        right: 5
       ),
       child: Icon(
         Icons.star_border,
@@ -66,10 +66,9 @@ class DescriptionPlace extends StatelessWidget{
         filaEstrellas
       ],
     );
-
     final descripcion = Container(
       margin: EdgeInsets.only(
-          top: 10
+        top: 10
       ),
       child: Text(
         textoDescripcion,
@@ -92,3 +91,5 @@ class DescriptionPlace extends StatelessWidget{
     return descriptionPlace;
   }
 }
+
+

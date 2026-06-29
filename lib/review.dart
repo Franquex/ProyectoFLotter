@@ -1,29 +1,30 @@
 import 'package:flutter/material.dart';
 
-
 class Review extends StatelessWidget {
-  String pathFoto;
-  String textoNombreUsuario;
+
+  String pathPhoto;
+  String textNombreUsuario;
   String textoResumenUsuario;
   int cantidadEstrellas;
   String textoComentario;
 
-  Review(this.pathFoto, this.textoNombreUsuario, this.textoResumenUsuario, this.cantidadEstrellas, this.textoComentario);
+  Review(this.pathPhoto, this.textNombreUsuario, this.textoResumenUsuario, this.cantidadEstrellas, this.textoComentario);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
 
     final foto = Container(
       margin: EdgeInsets.only(
-        right: 10
+        right: 10,
+        top: 10,
       ),
-      height: 80,
       width: 80,
+      height: 80,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
         image: DecorationImage(
           image: AssetImage(
-              pathFoto
+            pathPhoto
           ),
           fit: BoxFit.cover
         )
@@ -32,17 +33,17 @@ class Review extends StatelessWidget {
 
     final nombreUsuario = Container(
       child: Text(
-        textoNombreUsuario,
-            style: TextStyle(
+        textNombreUsuario,
+        style: TextStyle(
           fontFamily: "Lato",
           fontSize: 22
-      ),
+        ),
       ),
     );
 
     final resumenUsuario = Container(
       margin: EdgeInsets.only(
-        right: 10
+        right: 10,
       ),
       child: Text(
         textoResumenUsuario,
@@ -84,43 +85,43 @@ class Review extends StatelessWidget {
       }
     }
 
+
     final filaEstrellas = Row(
       children: estrellas,
     );
 
     final filaResumen = Row(
-      children: <Widget> [
+      children: <Widget>[
         resumenUsuario,
         filaEstrellas
       ],
     );
 
     final comentario = Container(
-     child: Text(
-         textoComentario,
-       style: TextStyle(
-         fontFamily: "Lato",
-       ),
-     ),
+      child: Text(
+        textoComentario,
+          style: TextStyle(
+          fontFamily: "Lato",
+      ),
+      ),
     );
 
     final columnaReview = Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget> [
+      children: <Widget>[
         nombreUsuario,
         filaResumen,
         comentario
       ],
     );
 
-  final review = Row(
-    children: <Widget> [
-      foto,
-      columnaReview
-    ],
-  );
-
+    final review = Row(
+      children: <Widget>[
+        foto,
+        columnaReview
+      ],
+    );
     return review;
   }
 }

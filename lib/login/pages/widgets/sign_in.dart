@@ -31,6 +31,7 @@ class _SignInState extends State<SignIn> {
   }
 
   Future<void> _handleLogin() async {
+    // LOGICA INTACTA
     String email = loginEmailController.text;
     String password = loginPasswordController.text;
 
@@ -43,7 +44,7 @@ class _SignInState extends State<SignIn> {
       return;
     }
 
-    final url = Uri.parse('http://127.0.0.1:8000/api/flutter/login/');
+    final url = Uri.parse('http://18.221.108.46:8000/api/flutter/login/');
     try {
       final response = await http.post(
         url,
@@ -67,7 +68,6 @@ class _SignInState extends State<SignIn> {
     }
   }
 
-  // --- NUEVA FUNCIÓN: RECUPERAR CONTRASEÑA ---
   void _showForgotPasswordDialog() {
     TextEditingController resetEmailController = TextEditingController();
     TextEditingController resetPasswordController = TextEditingController();
@@ -76,28 +76,30 @@ class _SignInState extends State<SignIn> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-          title: const Text("Recuperar Cuenta", style: TextStyle(fontFamily: 'WorkSansBold')),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)), // Borde más formal
+          title: const Text("Recuperar Cuenta", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black87)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text("Ingresa el correo con el que te registraste y la nueva contraseña.",
-                  style: TextStyle(fontFamily: 'WorkSansMedium')),
+                  style: TextStyle(color: Colors.black54)),
               const SizedBox(height: 15),
               TextField(
                 controller: resetEmailController,
                 decoration: const InputDecoration(
                   labelText: "Correo Electrónico",
-                  prefixIcon: Icon(Icons.email),
+                  prefixIcon: Icon(Icons.email, color: Colors.black54),
+                  border: OutlineInputBorder(),
                 ),
                 keyboardType: TextInputType.emailAddress,
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 15),
               TextField(
                 controller: resetPasswordController,
                 decoration: const InputDecoration(
                   labelText: "Nueva Contraseña",
-                  prefixIcon: Icon(Icons.lock),
+                  prefixIcon: Icon(Icons.lock, color: Colors.black54),
+                  border: OutlineInputBorder(),
                 ),
                 obscureText: true,
               ),
@@ -109,9 +111,10 @@ class _SignInState extends State<SignIn> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(backgroundColor: CustomTheme.loginGradientStart),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey.shade800, elevation: 0),
               child: const Text("Actualizar", style: TextStyle(color: Colors.white)),
               onPressed: () async {
+                // LOGICA INTACTA
                 String email = resetEmailController.text;
                 String nuevaPass = resetPasswordController.text;
 
@@ -130,7 +133,7 @@ class _SignInState extends State<SignIn> {
                   final decodedResponse = jsonDecode(response.body);
 
                   if (response.statusCode == 200) {
-                    Navigator.of(context).pop(); // Cierra el pop-up
+                    Navigator.of(context).pop();
                     CustomSnackBar(context, const Text('¡Contraseña actualizada con éxito!'), backgroundColor: Colors.green);
                   } else {
                     CustomSnackBar(context, Text('${decodedResponse["error"]}'), backgroundColor: Colors.red);
@@ -149,126 +152,84 @@ class _SignInState extends State<SignIn> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 23.0),
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
         children: <Widget>[
-          Stack(
-            alignment: Alignment.topCenter,
-            children: <Widget>[
-              Card(
-                elevation: 2.0,
-                color: const Color(0xFFFFFFFF),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-                child: Container(
-                  width: 300.0,
-                  height: 190.0,
-                  child: Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: focusNodeEmail,
-                          controller: loginEmailController,
-                          keyboardType: TextInputType.emailAddress,
-                          style: const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0, color: Colors.black),
-                          decoration: const InputDecoration(
-                            border: InputBorder.none,
-                            icon: FaIcon(FontAwesomeIcons.envelope, color: Colors.black, size: 22.0),
-                            hintText: 'Correo',
-                            hintStyle: TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 17.0),
-                          ),
-                          onSubmitted: (_) => focusNodePassword.requestFocus(),
-                        ),
-                      ),
-                      Container(width: 250.0, height: 1.0, color: Colors.grey[400]),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0, bottom: 20.0, left: 25.0, right: 25.0),
-                        child: TextField(
-                          focusNode: focusNodePassword,
-                          controller: loginPasswordController,
-                          obscureText: _obscureTextPassword,
-                          style: const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 16.0, color: Colors.black),
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            icon: const FaIcon(FontAwesomeIcons.lock, size: 22.0, color: Colors.black),
-                            hintText: 'Contraseña',
-                            hintStyle: const TextStyle(fontFamily: 'WorkSansSemiBold', fontSize: 17.0),
-                            suffixIcon: GestureDetector(
-                              onTap: _toggleLogin,
-                              child: FaIcon(
-                                _obscureTextPassword ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
-                                size: 15.0, color: Colors.black,
-                              ),
-                            ),
-                          ),
-                          onSubmitted: (_) => _handleLogin(),
-                          textInputAction: TextInputAction.go,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(top: 170.0),
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(color: CustomTheme.loginGradientStart, offset: Offset(1.0, 6.0), blurRadius: 20.0),
-                    BoxShadow(color: CustomTheme.loginGradientEnd, offset: Offset(1.0, 6.0), blurRadius: 20.0),
-                  ],
-                  gradient: LinearGradient(
-                      colors: <Color>[CustomTheme.loginGradientEnd, CustomTheme.loginGradientStart],
-                      begin: FractionalOffset(0.2, 0.2), end: FractionalOffset(1.0, 1.0),
-                      stops: <double>[0.0, 1.0], tileMode: TileMode.clamp),
-                ),
-                child: MaterialButton(
-                  highlightColor: Colors.transparent,
-                  splashColor: CustomTheme.loginGradientEnd,
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 42.0),
-                    child: Text('INGRESAR', style: TextStyle(color: Colors.white, fontSize: 25.0, fontFamily: 'WorkSansBold')),
-                  ),
-                  onPressed: _handleLogin,
-                ),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: TextButton(
-                onPressed: _showForgotPasswordDialog, // Conectado al nuevo PopUp
-                child: const Text(
-                  'Olvidaste tu Contraseña?',
-                  style: TextStyle(
-                      decoration: TextDecoration.underline, color: const Color(0xFFFFFFFF),
-                      fontSize: 16.0, fontFamily: 'WorkSansMedium'),
-                )),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+          Container(
+            padding: const EdgeInsets.all(20.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(8.0),
+              border: Border.all(color: Colors.grey.shade300),
+            ),
+            child: Column(
               children: <Widget>[
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: <Color>[Colors.white10, Colors.white],
-                        begin: FractionalOffset(0.0, 0.0), end: FractionalOffset(1.0, 1.0),
-                        stops: <double>[0.0, 1.0], tileMode: TileMode.clamp),
+                TextField(
+                  focusNode: focusNodeEmail,
+                  controller: loginEmailController,
+                  keyboardType: TextInputType.emailAddress,
+                  style: const TextStyle(fontSize: 15.0, color: Colors.black87),
+                  decoration: InputDecoration(
+                    labelText: 'Correo Electrónico',
+                    prefixIcon: Icon(FontAwesomeIcons.envelope, color: Colors.blueGrey.shade700, size: 20.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
                   ),
-                  width: 100.0, height: 1.0,
+                  onSubmitted: (_) => focusNodePassword.requestFocus(),
                 ),
-                Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: <Color>[Colors.white, Colors.white10],
-                        begin: FractionalOffset(0.0, 0.0), end: FractionalOffset(1.0, 1.0),
-                        stops: <double>[0.0, 1.0], tileMode: TileMode.clamp),
+                const SizedBox(height: 20.0),
+                TextField(
+                  focusNode: focusNodePassword,
+                  controller: loginPasswordController,
+                  obscureText: _obscureTextPassword,
+                  style: const TextStyle(fontSize: 15.0, color: Colors.black87),
+                  decoration: InputDecoration(
+                    labelText: 'Contraseña',
+                    prefixIcon: Icon(FontAwesomeIcons.lock, color: Colors.blueGrey.shade700, size: 20.0),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(5.0)),
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15.0, horizontal: 10.0),
+                    suffixIcon: GestureDetector(
+                      onTap: _toggleLogin,
+                      child: Icon(
+                        _obscureTextPassword ? FontAwesomeIcons.eye : FontAwesomeIcons.eyeSlash,
+                        size: 20.0, color: Colors.grey.shade600,
+                      ),
+                    ),
                   ),
-                  width: 100.0, height: 1.0,
+                  onSubmitted: (_) => _handleLogin(),
+                  textInputAction: TextInputAction.go,
                 ),
               ],
+            ),
+          ),
+
+          const SizedBox(height: 25.0),
+
+          Container(
+            width: double.infinity,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey.shade800, // Estilo sólido corporativo
+                padding: const EdgeInsets.symmetric(vertical: 15.0),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5.0)),
+                elevation: 0,
+              ),
+              onPressed: _handleLogin,
+              child: const Text('INGRESAR', style: TextStyle(color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+            ),
+          ),
+
+          const SizedBox(height: 15.0),
+
+          TextButton(
+            onPressed: _showForgotPasswordDialog,
+            child: Text(
+              '¿Olvidaste tu Contraseña?',
+              style: TextStyle(
+                decoration: TextDecoration.underline,
+                color: Colors.blueGrey.shade700, // Texto oscuro en lugar de blanco
+                fontSize: 15.0,
+              ),
             ),
           ),
         ],
